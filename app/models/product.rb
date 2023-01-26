@@ -1,5 +1,4 @@
 class Product < ApplicationRecord
-  belongs_to :brands
-	has_many :user, through: :orders
-  has_many :orders, dependent: :destroy
+  has_many :brands, through: :brand_products
+  has_many :brand_products,  dependent: :destroy
 end
