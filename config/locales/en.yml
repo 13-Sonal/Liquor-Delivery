@@ -31,3 +31,39 @@
 
 en:
   hello: "Hello world"
+
+  role:
+    success:
+      create: "Role created successfully!!"  
+      update: "Role updated successfully!!"
+      destroy: "Role deleted successfully!!"
+    error:
+      create: "Role not created!!" 
+      not_found: "Role not found!!"
+
+  user:
+    success:
+      create: "User created successfully!!"  
+      update: "User updated successfully!!"
+    error:
+      create: "User not created!!"    
+      update: "User not found!!"
+
+  brand:
+    success:
+      create: "Brand created successfully!!"  
+      update: "Brand updated successfully!!"
+      destroy: "Brand deleted successfully!!"
+    error:
+      create: "Brand not created!!" 
+      not_found: "Brand not found!!"
+  
+  product:
+    success:
+      create: "Product created successfully!!"  
+      update: "Product updated successfully!!"
+    error:
+      create: "Product not created!!" 
+      not_found: "Product not found!"   
+
+  
