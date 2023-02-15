@@ -17,13 +17,19 @@ module Brands
 			byebug
 			return true if brand
 
-			@response = I18n.t('brand.error.not_found')
+			@response = {
+				success: false, 
+				message: I18n.t('brand.error.not_found')
+			}
 		end
 
 		def delete
 			return response if response
 			brand.destroy
-			@response = I18n.t('brand.success.destroy')
+			@response = {
+				success: false, 
+				message: I18n.t('brand.success.destroy')
+			}
 
 		end
 		

@@ -1,6 +1,6 @@
-module Brands
+module Roles
   class Show < Base
-    attr_accessor :params, :id, :brand, :response
+    attr_accessor :params, :id, :role, :response
 
     def initialize(params)
       @id = params[:id]
@@ -11,13 +11,13 @@ module Brands
     end
 
     def find_id
-      @brand = Brand.find_by(id: id)
+      @role = Role.find_by(id: id)
       byebug
-      return true if brand
+      return true if role
 
       @response = {
         success: false,
-        message: I18n.t('brand.error.not_found')
+        message: I18n.t('role.error.not_found')
       }
     end
 
@@ -26,8 +26,8 @@ module Brands
 
       @response = {
         success: true,
-        message: I18n.t('brand.success.show'),
-        data: brand.as_json(except: %i[id created_at updated_at])
+        message: I18n.t('role.success.show'),
+        data: role.as_json(except: [:id, :created_at, :updated_at])
       }
     end
   end

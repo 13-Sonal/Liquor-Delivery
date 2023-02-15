@@ -1,6 +1,7 @@
 module Users
 	class Create < Base
-		attr_accessor :params, :response
+		attr_accessor :params, :response, :user
+
 		def initialize(params)
 
 			@params = params
@@ -13,18 +14,24 @@ module Users
 		
 
 		def save
-			user = User.new(params)
+			@user = User.new(params)
 			return true if user.save
 
-			@response = user.errors.full_messages
+			@response = {
+				success: false, 
+				message: user.errors.full_messages
+			}
 		end
 		
 		def display
 			return response if response
-			@response = I18n.t('user.success.create')
-		end
-		
-		
-	end   
-    
+			token = encode_token({user_id: @user.id})
+			@response = {
+				success: true, 
+				message: I18n.t('user.success.create'),
+				data: user.as_json(except: [:id, :created_at, :updated_at, :password]), 
+				token: token
+			}
+		end	
+	end       
 end

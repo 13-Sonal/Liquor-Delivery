@@ -7,23 +7,25 @@ module Roles
 			@id = params[:id]
 			
 		end
+	
 		def call
 			find_id && update && set_response
-			
 		end
-		
-
+	
 		def find_id
 			@role = Role.find_by(id: id)
 			return true if role
 
-			@response = I18n.t('role.error.update')
+			@response = {
+				success: false, 
+				message: I18n.t('role.error.update')
+			}
 			
 		end
 
 		def update
 			return response if response
-			role.update(params)
+			@role.update(params)
 			return true if role.save
 			@response = role.errors.full_messages
 
@@ -31,9 +33,10 @@ module Roles
 		
 		def set_response
 			return response if response
-			@response = I18n.t('role.success.update')
+			@response = {
+				success: true, 
+				message: I18n.t('role.success.update'), 
+				data: role.as_json(except:[:id, :created_at, :updated_at])
 		end
-		
 	end
-
 end

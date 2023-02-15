@@ -3,5 +3,8 @@ Rails.application.routes.draw do
   resources :brands
   resources :roles
   resources :users
-  resources :products
+  resources :products, only: [:create]
+  put '/brands/:brand_id/products/:product_id', to: 'products#update'
+  post '/sessions', to: 'sessions#login'
+
 end

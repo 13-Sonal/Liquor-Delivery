@@ -12,12 +12,19 @@ module Roles
 		def find_role
 			role = Role.find_by(id: id)
 			return true if role
-			@response = I18n.t('role.error.not_found')
+			@response = {
+				success: false, 
+				message: I18n.t('role.error.not_found')
+			}
 		end
+
 		def delete
 			return response if response
 			role.destroy
-			@response = I18n.t('role.success.destroy')
+			@response = {
+				success: true,
+			  message: I18n.t('role.success.destroy')
+			}
 
 		end
 

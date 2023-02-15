@@ -1,6 +1,6 @@
 module Brands
   class Create < Base
-   attr_accessor :params, :brand_name, :response
+   attr_accessor :params, :brand_name, :response, :brand
 
     def initialize(params)
       byebug
@@ -12,17 +12,24 @@ module Brands
     end
 
     def save
-      brand= Brand.new(params)
+      @brand= Brand.new(params)
       return true if brand.save
 
-      @response = brand.errors.full_messages
+      @response = {
+        success: false, 
+        message: brand.errors.full_messages
+      }
     end
     
     def display
       return response if response
 
-      @response = I18n.t('brand.success.create')
-  
+      byebug
+      @response = {
+        success: true, 
+        message: I18n.t('brand.success.create'),
+        data: brand.as_json(except: [:created_at, :updated_at, :id])
+      }
     end
   end
 end

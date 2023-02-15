@@ -1,7 +1,7 @@
 module Roles
 	class Create < Base
 		
-		attr_accessor :params,:response
+		attr_accessor :params,:response, :role
 		def initialize(params)
 			@params = params
 		end
@@ -12,17 +12,22 @@ module Roles
 		
 
 		def save
-			role = Role.new(params) 
+			@role = Role.new(params) 
 			return true if role.save
 
-			@response = {success: false, 
-				message: role.errors.full_messages}
+			@response = {
+				success: false, 
+				message: role.errors.full_messages
+			}
 		end
 
 		def display
 			return response if response
-			@response ={success: true,
-				message: I18n.t('role.success.create')}
+			@response ={
+				success: true,
+				message: I18n.t('role.success.create'),
+				data: role.as_json(except:[:created_at, :updated_at])
+			}
 		
 		end	
 	end

@@ -16,20 +16,32 @@ module Users
 		def find_id
 			@user = User.find_by(id: id)
 			return true if user
-			@response = I18n.t('user.error.update')
+			@response = {
+				success: false, 
+				message: I18n.t('user.error.not_found')
+			}
 			
 		end
 		
 		def update
 			return response if response
-			return true if user.save
-			@response = user.errors.full_messages
+			return true if user.update(params)
+			@response = {
+				success: false, 
+				message: user.errors.full_messages
+			}
 		end
 
 		def set_response
+			
 			return response if response
-			@response = I18n.t('user.success.update')
-		end
+			@response = {
+				success: true, 
+				message: I18n.t('user.success.update'),
+				data: user.as_json(except:[:id, :created_at, :updated_at, :id, :password])
+
+			}
+			end
 		
 	end
 end

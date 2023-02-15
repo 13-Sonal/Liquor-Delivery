@@ -1,9 +1,9 @@
 class BrandsController < ApplicationController 
-	protect_from_forgery
+	# protect_from_forgery
 
 	def create
 		result = Brands::Create.new(create_params).call
-		render json: result
+		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 	end
 
 	def create_params
@@ -12,13 +12,20 @@ class BrandsController < ApplicationController
 	end	
 
 	def index
-		render json: Brand.all
+		result = Brands::Index.new(params).call
+		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 	end
-	
+
+	def show
+		result = Brands::Show.new(params).call
+		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+	end
+
 	def update
 		byebug
 		result = Brands::Update.new(update_params).call
-		render json: result
+		result[:success] ? (render json: result) : (render json: 
+			result, status: :unprocessable_entity)
 	end
 
 	def update_params
@@ -29,8 +36,8 @@ class BrandsController < ApplicationController
 	def destroy
 		byebug
 		result = Brands::Destroy.new(delete_brand).call
-		render json: result
-
+		result[:success] ? (render json: result) : (render json: result,
+      status: :unprocessable_entity)
 	end
 
 	def delete_brand
