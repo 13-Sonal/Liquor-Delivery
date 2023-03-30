@@ -3,7 +3,12 @@ class ApplicationController < ActionController::Base
   # attr_accessor :current_user
   include JsonWebToken
   before_action :authenticate_request  
-  
+  rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
+
+  def handle_parameter_missing(exception)
+  render json: { error: exception.message }, status: :bad_request
+  end
+
   def logged_in_user
     current_user ||= @current_user
   end
@@ -12,9 +17,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_request
      token = request.headers["Authorization"]
-     byebug
 		 if token
-      byebug
 		  token_decoded = jwt_decode(token)
       if token_decoded[:user_id].present?
         @current_user=User.find_by(id: token_decoded[:user_id]) 
@@ -23,9 +26,7 @@ class ApplicationController < ActionController::Base
           success: false, 
           message: I18n.t('user.error.not_found')
         }
-      byebug
       elsif token_decoded[:error]
-        byebug
          render json:  {
           success: false, 
           message: token_decoded[:message]

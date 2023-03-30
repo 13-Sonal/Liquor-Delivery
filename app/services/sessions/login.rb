@@ -17,13 +17,19 @@ class Login
   def find_user
     @user = User.find_by(email_id: email)
     return true if user
-    @response = I18n.t('user.error.email')
+    @response = {
+      success: false, 
+      message: I18n.t('user.error.email')
+    }
   end
 
   def validate_password
     return response if response 
     return true if password == user.password 
-    @response = I18n.t('user.error.password')
+    @response = {
+      success: false, 
+      message: I18n.t('user.error.password')
+    }
   end
 
   def generate_token

@@ -20,7 +20,6 @@ class RolesController < ApplicationController
   def show
     result = Roles::Show.new(params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
-
   end
   
 
@@ -32,6 +31,7 @@ class RolesController < ApplicationController
 
   def update
     result = Roles::Update.new(update_params).call
+    byebug
     render json: result
   end
 

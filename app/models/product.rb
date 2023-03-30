@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
-  has_many :brand_products,  dependent: :destroy
-  has_many :brands, through: :brand_products
+  belongs_to :brand
+  validates :stock, presence: true
   validates_uniqueness_of :name
+  validates :price, presence: true
 end

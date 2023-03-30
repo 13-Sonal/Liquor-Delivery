@@ -5,20 +5,15 @@ module Products
 
 
 		def initialize(params)
-      @params = params
-      @product_params = params.except(:brand_id,
-        :quantity, :price) 
-      
+      byebug
+      @product_params = params
+      byebug
       @brand_id = params[:brand_id]
-      @qty = params[:quantity]
-      @price = params[:price]
-    
 		end
-  
+
     def call
-      find_brand && create_product &&
-      create_brand_products && display 
-    end	
+      find_brand && create_product && display 
+    end
 
     def find_brand
       @brand= Brand.find_by(id: brand_id)
@@ -42,25 +37,24 @@ module Products
         success: false, 
         message: product.errors.full_messages
       }
-
 		end
 
-    def create_brand_products
-      return response if response
-      byebug
-      @brand_pro = BrandProduct.new(
-        brand_id: brand.id,
-        product_id: product.id,
-        quantity: qty,
-        price: price
-      )
-      byebug
-      return true if brand_pro.save
-      @response = {
-        success: false, 
-        message: brand_pro.errors.full_messages
-      }
-    end
+    # def create_brand_products
+    #   return response if response
+    #   byebug
+    #   @brand_pro = BrandProduct.new(
+    #     brand_id: brand.id,
+    #     product_id: product.id,
+    #     quantity: qty,
+    #     price: price
+    #   )
+    #   byebug
+    #   return true if brand_pro.save
+    #   @response = {
+    #     success: false, 
+    #     message: brand_pro.errors.full_messages
+    #   }
+    # end
     
 
 

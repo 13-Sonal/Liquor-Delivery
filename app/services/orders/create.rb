@@ -1,62 +1,67 @@
 module Orders
 	class Create < Base
-		
-		def initialize
-			@brand_id = params[:brand_id]
-			@product_id = params[:product_id]
-			@user_id = params[:user_id]
-			@quantity = params[:quantity]
+		attr_accessor :product_orders, :order, :total_quantity,
+		:bill_value, :current_user, :response
+
+		def initialize(params, current_user)
+			@product_orders = params[:order][:products]
+			@current_user = current_user
+			@total_quantity = 0
+			@bill_value = 0
 		end
 
-		def find_brand_product
-			@brand_product = BrandProduct.find_by(brand_id: brand_id, product_id: product_id)
-			return response if brand_product
+		def call
+			create_order && link_products && qty_bill_update && set_response 
+		end
+
+		def create_order
+			@order = Order.new(user_id: current_user.id)
+
+			return true if order.save
+
 			@response = {
 				success: false, 
-				message: I18n.t('order.error.not_found')
+				message: order.errors.full_messages
 			}
+		end 
+		
+		def link_products
+			product_orders.each do |product_order_params|
+				result = ProductOrders::Create.new(product_order_params, order.id).call
+				byebug
+				if result[:success] == true
+					@total_quantity += result[:items].to_i
+					@bill_value += result[:accumulated_price].to_i
+					byebug
+				else 
+					@response= {
+						success: false, 
+						message: I18n.t('product_order.error.place')
+					}
+					break
+				end
+			end
 		end
 
-		def place_order
-			
-      return response if response
-			byebug
-      @order = Order.new(quantity)
-			return true if order.save
-      byebug
-			@response = {
-        success: false, 
-        message: product.errors.full_messages
-      }
-
-		end
-
-		def product_orders
+		def qty_bill_update
 			return response if response
       byebug
-      @productOrders = ProductOrder.new(
-        order_id: order.id,
-        product_id: product.id,
-        status: 'approved'
-			)
-      return true if productOrders.save
+			return true if order.update(total_quantity: total_quantity,
+				bill_value: bill_value)
+
 			@response = {
 				success: false, 
-				message: I18n.t('order.error.create')
-			}  
-			
+				message: order.errors.full_messages
+			}	
 		end
 		
+
 		def set_response
 			return response if response
 			@response = {
 				success: true, 
-				message: I18n.t('order')
+				message: I18n.t('order.success.create')
 			}
 		end
-		
-		
-		
 	end
-	
 end

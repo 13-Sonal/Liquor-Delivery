@@ -25,7 +25,6 @@ module Users
 		
 		def display
 			return response if response
-			token = encode_token({user_id: @user.id})
 			@response = {
 				success: true, 
 				message: I18n.t('user.success.create'),

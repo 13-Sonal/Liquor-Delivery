@@ -25,10 +25,10 @@ module Roles
 
 		def update
 			return response if response
-			@role.update(params)
-			return true if role.save
-			@response = role.errors.full_messages
 
+			return true if @role.update(params)
+
+			@response = role.errors.full_messages
 		end
 		
 		def set_response
@@ -37,6 +37,7 @@ module Roles
 				success: true, 
 				message: I18n.t('role.success.update'), 
 				data: role.as_json(except:[:id, :created_at, :updated_at])
+			}	
 		end
 	end
 end

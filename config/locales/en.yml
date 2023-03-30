@@ -43,6 +43,10 @@ en:
     error:
       create: "Role not created!!" 
       not_found: "Role not found!!"
+      
+  product_order:
+    error:
+      place: "Unable to place the order!!"    
 
   user:
     success:
@@ -56,6 +60,8 @@ en:
     error:
       create: "User not created!!"    
       not_found: "User not found!!"
+      email: "Email not found!!"
+      password: "Incorrect Password!!"
 
   brand:
     success:
@@ -85,5 +91,6 @@ en:
   authorization: 
     failure: "Token not present!!"
 
-
-  
+  order:
+    success:
+      create: 'Order successfully placed'  

@@ -3,6 +3,7 @@ module Roles
 		attr_accessor :id, :response, :role
 		def initialize(params)
 			@id = params[:id]
+			byebug
 		end
 		
 		def call
@@ -10,7 +11,9 @@ module Roles
 		end
 		
 		def find_role
+			byebug
 			role = Role.find_by(id: id)
+			byebug
 			return true if role
 			@response = {
 				success: false, 
@@ -20,11 +23,13 @@ module Roles
 
 		def delete
 			return response if response
+			byebug
 			role.destroy
 			@response = {
 				success: true,
 			  message: I18n.t('role.success.destroy')
 			}
+			byebug
 
 		end
 

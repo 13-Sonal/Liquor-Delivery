@@ -1,12 +1,9 @@
 class OrdersController < ApplicationController
-
+	protect_from_forgery
 	def create
-		result = Orders::Create.new(create_params).call
-	end	
-
-	def create_params
-		params.require(:order).permit(:quantity).merge(brand_id: params[:brand_id],
-			product_id: params[:product_id], user_id: params[:user_id])
+		byebug
+		result = Orders::Create.new(params, logged_in_user).call
+		result[:success] ? (render json: result) : (render json: result,
+			status: :unprocessable_entity)
 	end
-	
 end

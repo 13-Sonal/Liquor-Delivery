@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
   protect_from_forgery
 	def create
-    byebug
 		result = Products::Create.new(create_params).call
     byebug
 		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
@@ -14,12 +13,12 @@ class ProductsController < ApplicationController
   end
 
   def update_params
-    params.require(:brand_products).permit(:quantity, :name,
-      :price).merge(brand_id: params[:brand_id], product_id: params[:product_id] )
+    params.require(:product).permit(:quantity, :name,
+      :price, :stock).merge(product_id: params[:id] )
   end
   
 	def create_params
-		params.require(:product).permit(:quantity, :name,
-      :brand_id, :price)
+		params.require(:product).permit(:name, :price,
+      :stock).merge(brand_id: params[:id])
 	end
 end	

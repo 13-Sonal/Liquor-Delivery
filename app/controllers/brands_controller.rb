@@ -1,6 +1,5 @@
 class BrandsController < ApplicationController 
-	# protect_from_forgery
-
+	protect_from_forgery
 	def create
 		result = Brands::Create.new(create_params).call
 		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
@@ -12,6 +11,7 @@ class BrandsController < ApplicationController
 	end	
 
 	def index
+    byebug
 		result = Brands::Index.new(params).call
 		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 	end
