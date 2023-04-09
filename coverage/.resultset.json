@@ -43,6 +43,31 @@
           null
         ]
       },
+      "/home/josh/liquor_project/Liquor-Delivery/app/models/brand.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/josh/liquor_project/Liquor-Delivery/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/josh/liquor_project/Liquor-Delivery/app/models/product.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
       "/home/josh/liquor_project/Liquor-Delivery/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
@@ -117,7 +142,7 @@
       "/home/josh/liquor_project/Liquor-Delivery/app/controllers/brands_controller.rb": {
         "lines": [
           0,
-          null,
+          0,
           0,
           0,
           0,
@@ -352,39 +377,8 @@
         "branches": {
         }
       },
-      "/home/josh/liquor_project/Liquor-Delivery/app/models/application_record.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/home/josh/liquor_project/Liquor-Delivery/app/models/brand.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/home/josh/liquor_project/Liquor-Delivery/app/models/order.rb": {
         "lines": [
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/home/josh/liquor_project/Liquor-Delivery/app/models/product.rb": {
-        "lines": [
-          0,
           0,
           0,
           0,
@@ -1432,6 +1426,6 @@
         }
       }
     },
-    "timestamp": 1680166183
+    "timestamp": 1681030380
   }
 }

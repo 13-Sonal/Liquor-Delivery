@@ -27,7 +27,7 @@ module Brands
 			return response if response
 			brand.destroy
 			@response = {
-				success: false, 
+				success: true, 
 				message: I18n.t('brand.success.destroy')
 			}
 
