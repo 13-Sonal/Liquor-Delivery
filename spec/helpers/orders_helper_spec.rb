@@ -13,3 +13,7 @@ require 'rails_helper'
 RSpec.describe OrdersHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end
+
+config.expect_with :rspec do |c|
+  c.syntax = [:should, :expect]
+end

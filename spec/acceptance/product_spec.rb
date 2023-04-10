@@ -19,7 +19,7 @@ resource 'Brand' do
 
 	let(:create_product) {
 		{
-			product: build(:product,
+			product: create(:product,
 			brand_id: brand.id,
 			name: 'Beer',
 			stock: '200',
@@ -29,7 +29,6 @@ resource 'Brand' do
 
 	describe "Product creation" do
 		it "Creating a product successfully" do
-			byebug
 			#response_data = JSON.parse(response_body)
 			do_request(create_product)
 			byebug
