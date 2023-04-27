@@ -3,7 +3,6 @@ module Brands
 	class Update
 	  attr_accessor :update_params, :response, :brand, :id
 		def initialize(params)
-			byebug 
 			@update_params = params.except(:id)
 			@id = params[:id]
 		end
@@ -14,7 +13,6 @@ module Brands
 		
 		def brands_exist
 			@brand = Brand.find_by(id: id)
-			byebug
 			return true if brand
 			@response = {
 				success: false, 

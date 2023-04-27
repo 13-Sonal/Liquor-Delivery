@@ -5,3 +5,5 @@ FactoryBot.define do
         key { Faker::Name.name.downcase.parameterize(separator: '_') }
     end
 end
+
+Faker::Base.numerify('')

@@ -12,7 +12,6 @@ module Users
 
     def find_id
       @user = User.find_by(id: id)
-      byebug
       return true if user
 
       @response = {

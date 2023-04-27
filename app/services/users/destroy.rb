@@ -4,9 +4,7 @@ module Users
 		attr_accessor :id, :user, :response
  
 		def initialize(params)
-			byebug
 			@id = params[:id]
-			byebug
 		end
 
 		def call

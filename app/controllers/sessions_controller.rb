@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_request 
   def login
     result = Sessions::Login.new(login_params).call
-    byebug
     render json: result
   end
 

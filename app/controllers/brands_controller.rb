@@ -6,12 +6,10 @@ class BrandsController < ApplicationController
 	end
 
 	def create_params
-		byebug
 		params.require(:brand).permit(:name, :key)
 	end	
 
 	def index
-    byebug
 		result = Brands::Index.new(params).call
 		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 	end
@@ -22,19 +20,16 @@ class BrandsController < ApplicationController
 	end
 
 	def update
-		byebug
 		result = Brands::Update.new(update_params).call
 		result[:success] ? (render json: result) : (render json: 
 			result, status: :unprocessable_entity)
 	end
 
 	def update_params
-		byebug
 		params.require(:brand).permit(:name, :key).merge(id: params[:id])
 	end
 
 	def destroy
-		byebug
 		result = Brands::Destroy.new(delete_brand).call
 		result[:success] ? (render json: result) : (render json: result,
       status: :unprocessable_entity)

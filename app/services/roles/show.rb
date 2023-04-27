@@ -12,7 +12,6 @@ module Roles
 
     def find_id
       @role = Role.find_by(id: id)
-      byebug
       return true if role
 
       @response = {

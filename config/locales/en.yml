@@ -78,6 +78,9 @@ en:
     success:
       create: "Product created successfully!!"  
       update: "Product updated successfully!!"
+      destroy: "Product deleted successfully!!"
+      show: "Product displayed successfully!!"
+      index: "All Products"
     error:
       create: "Product not created!!" 
       not_found: "Product not found!"

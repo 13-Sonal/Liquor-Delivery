@@ -24,7 +24,6 @@ class UsersController < ApplicationController
   
 
   def destroy
-    byebug
     result = Users::Destroy.new(params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end

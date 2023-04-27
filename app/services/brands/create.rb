@@ -3,7 +3,6 @@ module Brands
    attr_accessor :params, :brand_name, :response, :brand
 
     def initialize(params)
-      byebug
       @params = params   
     end
 
@@ -24,7 +23,6 @@ module Brands
     def display
       return response if response
 
-      byebug
       @response = {
         success: true, 
         message: I18n.t('brand.success.create'),

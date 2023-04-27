@@ -4,6 +4,7 @@ module Orders
 		:bill_value, :current_user, :response
 
 		def initialize(params, current_user)
+			byebug
 			@product_orders = params[:order][:products]
 			@current_user = current_user
 			@total_quantity = 0
@@ -15,6 +16,7 @@ module Orders
 		end
 
 		def create_order
+			byebug
 			@order = Order.new(user_id: current_user.id)
 
 			return true if order.save
@@ -26,13 +28,12 @@ module Orders
 		end 
 		
 		def link_products
+			byebug
 			product_orders.each do |product_order_params|
 				result = ProductOrders::Create.new(product_order_params, order.id).call
-				byebug
 				if result[:success] == true
 					@total_quantity += result[:items].to_i
 					@bill_value += result[:accumulated_price].to_i
-					byebug
 				else 
 					@response= {
 						success: false, 
@@ -45,7 +46,7 @@ module Orders
 
 		def qty_bill_update
 			return response if response
-      byebug
+
 			return true if order.update(total_quantity: total_quantity,
 				bill_value: bill_value)
 

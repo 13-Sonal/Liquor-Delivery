@@ -67,19 +67,14 @@ resource 'Brand' do
 
 			it "brand should be created successfully" do
 				do_request(create_brand)
-				byebug
 				response_data = JSON.parse(response_body)
-				byebug
 				expect(response_data["success"]).to eq(true)
 				expect(response_data["message"]).to eq('Brand created successfully!!')
-
 			end
 
       it "brand can not be created when brand name/key is already present" do
 				do_request(same_brand_name)
-				byebug
 				response_data = JSON.parse(response_body)
-				byebug
 				expect(response_data["success"]).to eq(false)  
 				expect(response_data["message"].include?("Name
 				has already been taken")).to eq(false)
@@ -141,21 +136,18 @@ delete '/brands/:id' do
 	
 		describe "Delete a brand" do
 			it "Brand can be deleted successfully" do
-			byebug
 			do_request(show_brand)
 			response_data = JSON.parse(response_body)
 			expect(response_status).to eq(200)
 			expect(response_data["success"]).to eq(true)
 			expect(response_data["message"]).to eq(I18n.t('brand.success.destroy'))
-
-		end
-		    it "Brand can not be deleted if brand is not present for mentioned Id" do
+		  end
+		it "Brand can not be deleted if brand is not present for mentioned Id" do
 			do_request(id: 787)
 			response_data = JSON.parse(response_body)
-			byebug
 			expect(response_status).to eq(422)
 			expect(response_data["message"]).to eq(I18n.t('brand.error.not_found'))
-		    end
+		  end
 	  end
   end	
 end

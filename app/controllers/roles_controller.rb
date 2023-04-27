@@ -2,7 +2,6 @@ class RolesController < ApplicationController
   protect_from_forgery
   
   def create
-  byebug
   result = Roles::Create.new(create_params).call
   result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end  
@@ -31,7 +30,6 @@ class RolesController < ApplicationController
 
   def update
     result = Roles::Update.new(update_params).call
-    byebug
     render json: result
   end
 

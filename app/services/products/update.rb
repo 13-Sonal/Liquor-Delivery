@@ -6,7 +6,6 @@ module Products
 
 		def initialize(params)
 			@update_brand_products = params.slice(:price, :stock, :name)
-			byebug
 			@product_id = params[:product_id]
 		end
 
@@ -15,7 +14,6 @@ module Products
 		end
 
 		def find_product
-			byebug
 			return response if response
 			@product = Product.find_by(id: product_id)
 			return true if product
@@ -40,7 +38,6 @@ module Products
 		# end
 
 		def update_key
-			byebug
 			return response if response
 			return true if product.update(update_brand_products)
 			@response = {

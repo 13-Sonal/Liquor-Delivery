@@ -5,7 +5,6 @@ module ProductOrders
     :params, :product_order, :order_id
 
     def initialize(params, order_id)
-      byebug
       @order_id = order_id
       @params = params
       @product_id = params[:product_id]
@@ -32,7 +31,6 @@ module ProductOrders
       @product_order_params[:product_id] = product.id
       @product_order_params[:order_id] = order_id
       @product_order_params[:items] = params[:items]
-      byebug
       @product_order_params[:accumulated_price] = (product.price.to_i *
         params[:items].to_i)
     end
@@ -40,7 +38,6 @@ module ProductOrders
     def create_product_orders
       return response if response
 
-      byebug
       @product_order = ProductOrder.new(product_order_params)
 
       
@@ -58,3 +55,4 @@ module ProductOrders
     end
   end
 end
+  

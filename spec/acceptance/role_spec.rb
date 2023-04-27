@@ -94,7 +94,6 @@ resource 'Role' do
       it 'role name should not be updated with existing name' do
         do_request(supplier_role_hash)
         response_data = JSON.parse(response_body)
-        byebug
         expect(response_data["success"]).to eq(false)
         expect(response_status).to eq(200)
       end
@@ -109,15 +108,10 @@ resource 'Role' do
       describe "role should get deleted" do
         it 'role should get deleted successfully' do
           role_count = Role.all.count
-          byebug
           do_request(id: supplier_role.id)
-          byebug
           expect(Role.count).to eq(role_count + 1)
-          byebug
           response_body = JSON.parse(response_data)
-          byebug
         end
-
       end
   end
 end

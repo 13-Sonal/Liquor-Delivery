@@ -12,7 +12,6 @@ module Brands
 
     def find_id
       @brand = Brand.find_by(id: id)
-      byebug
       return true if brand
 
       @response = {
