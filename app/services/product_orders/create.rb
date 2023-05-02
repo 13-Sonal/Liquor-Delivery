@@ -5,6 +5,7 @@ module ProductOrders
     :params, :product_order, :order_id
 
     def initialize(params, order_id)
+      byebug
       @order_id = order_id
       @params = params
       @product_id = params[:product_id]
@@ -40,7 +41,6 @@ module ProductOrders
 
       @product_order = ProductOrder.new(product_order_params)
 
-      
       success_response = { 
         success: true,
         accumulated_price: product_order.accumulated_price,

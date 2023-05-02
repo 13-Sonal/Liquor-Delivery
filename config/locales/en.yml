@@ -39,8 +39,8 @@ en:
       destroy: "Role deleted successfully!!"
       show: "Role displayed successfully!"
       index: "All Roles"
-      
     error:
+      access_denied: "Access Denied"
       create: "Role not created!!" 
       not_found: "Role not found!!"
       
@@ -55,8 +55,6 @@ en:
       destroy: "User deleted successfully!!"
       index: "All Users"
       show: "User displayed successfully!"
-
-
     error:
       create: "User not created!!"    
       not_found: "User not found!!"

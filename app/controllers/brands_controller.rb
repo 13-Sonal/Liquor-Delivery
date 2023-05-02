@@ -1,7 +1,7 @@
 class BrandsController < ApplicationController 
 	protect_from_forgery
 	def create
-		result = Brands::Create.new(create_params).call
+		result = Brands::Create.new(create_params,logged_in_user).call
 		result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 	end
 
@@ -20,7 +20,7 @@ class BrandsController < ApplicationController
 	end
 
 	def update
-		result = Brands::Update.new(update_params).call
+		result = Brands::Update.new(update_params,logged_in_user).call
 		result[:success] ? (render json: result) : (render json: 
 			result, status: :unprocessable_entity)
 	end
@@ -30,7 +30,7 @@ class BrandsController < ApplicationController
 	end
 
 	def destroy
-		result = Brands::Destroy.new(delete_brand).call
+		result = Brands::Destroy.new(delete_brand,logged_in_user).call
 		result[:success] ? (render json: result) : (render json: result,
       status: :unprocessable_entity)
 	end

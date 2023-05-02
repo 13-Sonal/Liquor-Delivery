@@ -28,29 +28,22 @@ module Orders
 		
 		def link_products
 			byebug
-      ActiveRecord::Base.transaction do
-				product_orders.each do |product_order_params|
-					if find_product(product_order_params[:product_id]).present?
-						product_order = ProductOrder.new(
-							product_id: product_order_params[:product_id],
-							order_id: order.id,
-							items:  product_order_params[:items],
-							accumulated_price: (@product.price.to_i *
-								product_order_params[:items].to_i)
-						)
-						product_order.save
+			product_orders.each do |product_order_params|
+				result = ProductOrders::Create.new(product_order_params, order.id).call
+				byebug
+				if result[:success] == true
+					@total_quantity += result[:items].to_i
+					@bill_value += result[:accumulated_price].to_i
+				else
 					byebug
-					else
-						byebug
-						@response= {
-							success: false, 
-							message: I18n.t('product_order.error.place')
-						}
-						# byebug
-						# break
-					end
+					@response= {
+						success: false, 
+						message: I18n.t('product_order.error.place')
+					}
+					# byebug
+					# break
 				end
-      end
+			end
 		end
 
 		def qty_bill_update
@@ -74,14 +67,5 @@ module Orders
 				message: I18n.t('order.success.create')
 			}
 		end
-
-    def find_product(product_id)
-      @product = Product.find_by(id: product_id)
-      if @product
-        true
-      else
-        false
-      end
-    end
 	end
 end

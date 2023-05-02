@@ -6,3 +6,4 @@ class OrdersController < ApplicationController
 		status: :unprocessable_entity)
 	end
 end
+

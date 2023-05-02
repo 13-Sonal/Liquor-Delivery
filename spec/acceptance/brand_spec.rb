@@ -145,7 +145,7 @@ delete '/brands/:id' do
 		it "Brand can not be deleted if brand is not present for mentioned Id" do
 			do_request(id: 787)
 			response_data = JSON.parse(response_body)
-			expect(response_status).to eq(422)
+			expect(response_status).t    o eq(422)
 			expect(response_data["message"]).to eq(I18n.t('brand.error.not_found'))
 		  end
 	  end
