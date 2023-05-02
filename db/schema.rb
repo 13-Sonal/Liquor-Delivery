@@ -10,19 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_26_114740) do
+ActiveRecord::Schema.define(version: 2023_02_15_152932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "brand_products", force: :cascade do |t|
-    t.bigint "brand_id"
-    t.bigint "product_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["brand_id"], name: "index_brand_products_on_brand_id"
-    t.index ["product_id"], name: "index_brand_products_on_product_id"
-  end
 
   create_table "brands", force: :cascade do |t|
     t.string "name"
@@ -33,8 +24,8 @@ ActiveRecord::Schema.define(version: 2023_01_26_114740) do
 
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "order_quantity"
-    t.integer "total_price"
+    t.integer "total_quantity"
+    t.integer "bill_value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -43,19 +34,22 @@ ActiveRecord::Schema.define(version: 2023_01_26_114740) do
   create_table "product_orders", force: :cascade do |t|
     t.bigint "order_id"
     t.bigint "product_id"
-    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "items"
+    t.string "accumulated_price"
     t.index ["order_id"], name: "index_product_orders_on_order_id"
     t.index ["product_id"], name: "index_product_orders_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
-    t.integer "quantity"
     t.string "name"
-    t.float "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "stock"
+    t.string "price"
+    t.bigint "brand_id"
+    t.index ["brand_id"], name: "index_products_on_brand_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -76,4 +70,6 @@ ActiveRecord::Schema.define(version: 2023_01_26_114740) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["role_id"], name: "index_users_on_role_id"
   end
+
+  add_foreign_key "products", "brands"
 end
