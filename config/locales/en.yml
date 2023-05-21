@@ -31,3 +31,67 @@
 
 en:
   hello: "Hello world"
+
+  role:
+    success:
+      create: "Role created successfully!!"  
+      update: "Role updated successfully!!"
+      destroy: "Role deleted successfully!!"
+      show: "Role displayed successfully!"
+      index: "All Roles"
+    error:
+      access_denied: "Access Denied"
+      create: "Role not created!!" 
+      not_found: "Role not found!!"
+      
+  product_order:
+    error:
+      place: "Unable to place the order!!"    
+
+  user:
+    success:
+      create: "User created successfully!!"  
+      update: "User updated successfully!!"
+      destroy: "User deleted successfully!!"
+      index: "All Users"
+      show: "User displayed successfully!"
+    error:
+      create: "User not created!!"    
+      not_found: "User not found!!"
+      email: "Email not found!!"
+      password: "Incorrect Password!!"
+
+  brand:
+    success:
+      create: "Brand created successfully!!"  
+      update: "Brand updated successfully!!"
+      destroy: "Brand deleted successfully!!"
+      show: "Brand displayed successfully"
+      index: "All Brands"
+    error:
+      create: "Brand not created!!" 
+      not_found: "Brand not found!!"
+  
+  product:
+    success:
+      create: "Product created successfully!!"  
+      update: "Product updated successfully!!"
+      destroy: "Product deleted successfully!!"
+      show: "Product displayed successfully!!"
+      index: "All Products"
+    error:
+      create: "Product not created!!" 
+      not_found: "Product not found!"
+
+  brand_product:
+    success:
+      update: "Brand Product updated successfully!"
+    error:
+      not_found: "Brand Product not found!"
+
+  authorization: 
+    failure: "Token not present!!"
+
+  order:
+    success:
+      create: 'Order successfully placed'  
