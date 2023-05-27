@@ -5,3 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Role.find_or_create_by(name: "Admin", key: "admin")
+Role.find_or_create_by(name: "Supplier", key: "supplier")

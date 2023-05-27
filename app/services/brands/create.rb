@@ -37,7 +37,7 @@ module Brands
       @response = {
         success: true, 
         message: I18n.t('brand.success.create'),
-        data: brand.as_json(except: [:created_at, :updated_at, :id])
+        data: brand.as_json(except: [:created_at, :updated_at, :id, :is_active])
       }
     end
   end

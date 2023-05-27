@@ -3,17 +3,16 @@ module Users
 		attr_accessor :params, :id, :user, :response
 
 		def initialize(params)
-
 			@params = params.except(params[:id]) 
 			@id = params[:id]
 		end
 
 		def call
-			find_id && update && set_response
+			find_user && update && set_response
 		end
 		
 
-		def find_id
+		def find_user
 			@user = User.find_by(id: id)
 			return true if user
 			@response = {

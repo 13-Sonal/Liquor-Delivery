@@ -1,5 +1,5 @@
 module Brands
-  class Destroy
+  class Deactivate
 		attr_accessor :brand, :response, :id,:current_user
 	
 		def initialize(params,current_user)
@@ -17,7 +17,7 @@ module Brands
 	  end
 		
 		def call
-			find_brand && delete
+			find_brand && brand_deactivate
 		end
 		
 		def find_brand
@@ -30,18 +30,13 @@ module Brands
 			}
 		end
 
-		def delete
+		def brand_deactivate
 			return response if response
-			brand.destroy
+			brand.update(is_active: "false")
 			@response = {
 				success: true, 
 				message: I18n.t('brand.success.destroy')
 			}
-
 		end
-		
-		
-		
 	end
-	
 end

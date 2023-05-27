@@ -1,20 +1,23 @@
 module Roles
 	class Update
-		attr_accessor :params, :response, :role, :id
-		def initialize(params)
+		attr_accessor :params, :response, :role, :id, :current_user
 
+		def initialize(params, current_user)
 			@params = params.except(params[:id]) 
 			@id = params[:id]
 			
 		end
 	
 		def call
-			find_id && update && set_response
+			find_role && update && set_response
 		end
 	
-		def find_id
+		def find_role
 			@role = Role.find_by(id: id)
-			return true if role
+			if role
+				authorize role
+				return true
+			end
 
 			@response = {
 				success: false, 

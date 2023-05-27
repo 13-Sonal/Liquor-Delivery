@@ -12,15 +12,14 @@ module Brands
 			check_access && brands_exist && update && set_response
 		end	
 		
-			def check_access
-				byebug
-				return true if (current_user.is_admin? || current_user.is_supplier?) 
-				@response =
+		def check_access
+			return true if (current_user.is_admin? || current_user.is_supplier?) 
+			@response =
 			{
 				success: false, 
 		    message: "Access Denied"
 			} 
-			end
+		end
 		
 		def brands_exist
 			return response if response
@@ -40,7 +39,6 @@ module Brands
 				message: brand.errors.full_messages
 			}
 		end
-
 
 		def set_response
 			return response if response

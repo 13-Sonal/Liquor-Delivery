@@ -23,20 +23,6 @@ module Products
 			}
 		end
 
-		# def create_brand_product
-		# 	return response if response
-		# 	byebug
-		# 	@brand_product = BrandProduct.new(
-		# 		brand_id: brand.id,
-		# 		product_id: product.id
-		# 	)
-		# 	return true if brand_product
-		# 	@response = {
-		# 		success: false,
-		# 		message: I18n.t('brand_product.error.not_found')
-		# 	}
-		# end
-
 		def update_key
 			return response if response
 			return true if product.update(update_brand_products)
@@ -51,7 +37,8 @@ module Products
 			@response = {
 				success: true,
 				message: I18n.t('product.success.update'),
-				data: product.as_json(except: [:created_at, :updated_at])
+				brand: product.brand.name,
+				data: product.as_json(except: [:id, :brand_id, :created_at, :updated_at])
 			}
 		end
 	end

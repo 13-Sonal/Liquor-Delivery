@@ -27,9 +27,9 @@ module Orders
 		end 
 		
 		def link_products
-			byebug
       ActiveRecord::Base.transaction do
 				product_orders.each do |product_order_params|
+	
 					if find_product(product_order_params[:product_id]).present?
 						product_order = ProductOrder.new(
 							product_id: product_order_params[:product_id],
@@ -39,14 +39,14 @@ module Orders
 								product_order_params[:items].to_i)
 						)
 						product_order.save
-					byebug
+	
 					else
-						byebug
+		
 						@response= {
 							success: false, 
 							message: I18n.t('product_order.error.place')
 						}
-						# byebug
+				
 						# break
 					end
 				end
@@ -54,7 +54,6 @@ module Orders
 		end
 
 		def qty_bill_update
-			byebug
 			return response if response
 
 			return true if order.update(total_quantity: total_quantity,

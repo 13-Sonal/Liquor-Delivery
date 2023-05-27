@@ -10,19 +10,21 @@ module Brands
 		end
 		
 		def fetch_brands
-			@brand = Brand.all
+			@brand = Brand.all.active
 			return true if brand.present?
 			@response = {
 				success: false, 
 				message: I18n.t('brand.error.not_found')
 			}
 		end
+		
 		def set_response
 			return response if response
 			@response = {
 				success: true, 
 				message: I18n.t('brand.success.index'),
-				data: brand.as_json(except: [:id, :created_at, :updated_at])
+				count: brand.count,
+				data: brand.as_json(except: [:id, :created_at, :updated_at, :is_active])
 			}
 		end
 	end

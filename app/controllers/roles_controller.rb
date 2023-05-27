@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  protect_from_forgery
+  # protect_from_forgery
   
   def create
   result = Roles::Create.new(create_params).call
@@ -7,7 +7,6 @@ class RolesController < ApplicationController
   end  
 
   def create_params
-    
     params.require(:role).permit(:name, :key)
   end
 
@@ -29,14 +28,12 @@ class RolesController < ApplicationController
   end
 
   def update
-    result = Roles::Update.new(update_params).call
+    byebug
+    result = Roles::Update.new(update_params, logged_in_user).call
     render json: result
   end
 
   def update_params
     params.require(:role).permit(:name, :key).merge(id: params[:id])
   end
-  
-  
-
 end   

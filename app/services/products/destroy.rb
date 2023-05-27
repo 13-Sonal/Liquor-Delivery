@@ -4,8 +4,9 @@ module Products
 		attr_accessor :id, :params, :product, :response
 
 		def initialize(params)
-			@id = params[:id]
+		@id = params[:id]
 		end
+		
 		def call
 			find_prod && delete
 		end

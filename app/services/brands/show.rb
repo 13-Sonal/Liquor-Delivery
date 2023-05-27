@@ -12,7 +12,7 @@ module Brands
 
     def find_id
       @brand = Brand.find_by(id: id)
-      return true if brand
+      return true if brand.is_active
 
       @response = {
         success: false,

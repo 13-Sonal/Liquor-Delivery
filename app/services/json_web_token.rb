@@ -17,7 +17,7 @@ module JsonWebToken
   rescue JWT::VerificationError
     return { 
       error: true, 
-      message: 'Unabale to verify token' }
+      message: 'Unable to verify token' }
   rescue JWT::DecodeError
     return { 
       error: true, 

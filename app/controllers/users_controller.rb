@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       :last_name, :contact_number, :email_id, :role_id, :password)
   end
   def index
-    result = Users::Index.new(params).call
+    result = Users::Index.new(params, current_user).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 
   end

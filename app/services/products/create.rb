@@ -14,14 +14,14 @@ module Products
     end
 
     def find_brand
-      @brand= Brand.find_by(id: brand_id)
-      return true if brand
+      @brand= Brand.find_by(id: brand_id)  
+      return true if brand && brand.is_active
       @response = {
         success: false, 
         message: I18n.t('brand.error.not_found')
       }
     end
-		
+
     def create_product
       return response if response
       @product = Product.new(product_params)
@@ -56,7 +56,8 @@ module Products
 			@reponse = {
         success: true, 
         message: I18n.t('product.success.create'),
-        data: product.as_json(except: [:created_at, :updated_at])
+        brand: product.brand.name,
+        data: product.as_json(except: [:id, :brand_id, :created_at, :updated_at])
       }
 		end
 		

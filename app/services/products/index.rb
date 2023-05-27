@@ -11,7 +11,7 @@ module Products
 		end
 		
 		def find_products
-			@product = Product.all
+			@product = Product.active_brands
 			return true if product.present?
 			@response = {
 				success: false,

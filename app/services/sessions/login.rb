@@ -5,6 +5,7 @@ class Login
   include JsonWebToken
   attr_accessor :user, :email, :password, :token, :response
   def initialize(params)
+    byebug
     @email= params[:email]
     @password = params[:password]
   end
@@ -15,7 +16,9 @@ class Login
   end
 
   def find_user
+    byebug
     @user = User.find_by(email_id: email)
+    byebug
     return true if user
     @response = {
       success: false, 

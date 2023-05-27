@@ -1,7 +1,7 @@
 module Users
 	class Index < Base
 		attr_accessor :response, :user
-		
+		authorize @user
 		def initialize(params)
 			@params = params
 		end

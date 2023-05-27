@@ -10,6 +10,7 @@ module ProductOrders
       @params = params
       @product_id = params[:product_id]
       @product_order_params = {}
+      byebug
     end
 
     def call
@@ -17,6 +18,7 @@ module ProductOrders
     end
 
     def find_product
+      byebug
       @product = Product.find_by(id: product_id)
 
       return true if product
@@ -29,7 +31,9 @@ module ProductOrders
 
     def set_product_params
       return response if response
+      byebug
       @product_order_params[:product_id] = product.id
+      byebug
       @product_order_params[:order_id] = order_id
       @product_order_params[:items] = params[:items]
       @product_order_params[:accumulated_price] = (product.price.to_i *
@@ -49,6 +53,7 @@ module ProductOrders
 
       if product_order.save
         success_response
+        byebug
       else
         false
       end

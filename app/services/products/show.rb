@@ -10,10 +10,10 @@ module Products
 		def call
 			find_prod && show
 		end
-
+		
 		def find_prod
 			@product = Product.find_by(id: params[:id])
-			return true if product
+			return true if product && product.brand.is_active
 			@response = {
 				success: false,
 				message: I18n.t('product.error.not_found')
