@@ -1,10 +1,11 @@
 require 'rails_helper'
 require 'rspec_api_documentation/dsl'
+require 'global_variable_helper'
 
 resource 'Role' do
   include JsonWebToken
 
-  let!(:customer) { create(:role, name: 'Customer', key: 'customer') }
+  # let!(:customer) { create(:role, name: 'Customer', key: 'customer') }
   let(:supp_role_hash) do
     {
       role: build(:role,
@@ -22,7 +23,7 @@ resource 'Role' do
   end
   let(:update_role) do
     {
-      id: Role.find_by(key:"supplier").id,
+      id: Role.find_by(key: 'supplier').id,
       role: build(:role,
                   name: 'Supplier2',
                   key: 'supplier_2').attributes.except('id', 'created_at', 'updated_at')
@@ -35,16 +36,12 @@ resource 'Role' do
     }
   end
 
-  let(:user_1) do
-    create(:user, first_name: 'Sonal',
-                  role_id: Role.find_by(key: 'admin').id)
-  end
   let(:raw_post) { params.to_json }
 
   post '/roles' do
     before do
       header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: user_1.id)
+      header 'Authorization', jwt_encode(user_id: $admin_user.id)
     end
 
     describe '#creating a role' do
@@ -70,7 +67,7 @@ resource 'Role' do
   put '/roles/:id' do
     before do
       header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: user_1.id)
+      header 'Authorization', jwt_encode(user_id: $admin_user.id)
     end
 
     describe 'updating a role' do
@@ -78,7 +75,6 @@ resource 'Role' do
         do_request(update_role)
         role_count = Role.all.count
         response_data = JSON.parse(response_body)
-        byebug
         expect(response_data['success']).to eq(true)
         expect(response_data['message']).to eq(I18n.t('role.success.update'))
         expect(response_status).to eq(200)
@@ -100,7 +96,7 @@ resource 'Role' do
     # delete '/roles/:id' do
     #   before do
     #     header 'Content-Type', 'application/json'
-    #     header 'Authorization', jwt_encode(user_id: user_1.id)
+    #     header 'Authorization', jwt_encode(user_id: admin.id)
     #   end
 
     #   describe 'role should get deleted' do

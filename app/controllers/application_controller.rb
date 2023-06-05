@@ -1,12 +1,13 @@
 class ApplicationController < ActionController::Base
   include JsonWebToken
   before_action :authenticate_request
-  load_and_authorize_resource
-  
+  authorize_resource
+
   attr_accessor :current_user
+
   rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
   rescue_from CanCan::AccessDenied do |exception|
-    render json: { message: exception.message}, status: :unauthorized
+    render json: { message: exception.message, authorization_failure: true }, status: :unauthorized
   end
 
   def handle_parameter_missing(exception)
@@ -18,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
   def authenticate_request
     token = request.headers['Authorization']
     if token

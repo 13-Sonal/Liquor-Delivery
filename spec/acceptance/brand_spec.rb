@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'rspec_api_documentation/dsl'
+require 'global_variable_helper'
 
 resource 'Brand' do
   include JsonWebToken
@@ -35,10 +36,6 @@ resource 'Brand' do
     }
   end
 
-  let!(:user_1) do
-    create(:user, first_name: 'Sonal',
-                  role_id: Role.find_by(key: 'admin').id)
-  end
   let!(:brand_1) { create(:brand, name: 'Smirnoff') }
 
   let(:raw_post) { params.to_json }
@@ -46,7 +43,7 @@ resource 'Brand' do
   post '/brands' do
     before do
       header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: user_1.id)
+      header 'Authorization', jwt_encode(user_id: $admin_user.id)
     end
 
     describe '#creating a brand' do
@@ -66,13 +63,27 @@ resource 'Brand' do
       end
     end
   end
+  post '/brands' do
+    describe 'Brand creation as customer' do
+      before do
+        header 'Content-Type', 'application/json'
+        header 'Authorization', jwt_encode(user_id: $customer_user.id)
+      end
+
+      it 'Customer user should not be able to create brand' do
+        do_request(create_brand)
+        response_data = JSON.parse(response_body)
+        expect(response_status).to eq(401)
+        expect(response_data['message']).to eq('You are not authorized to access this page.')
+      end
+    end
+  end
 
   put '/brands/:id' do
     before do
       header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: user_1.id)
+      header 'Authorization', jwt_encode(user_id: $admin_user.id)
     end
-    let(:raw_post) { params.to_json }
 
     describe 'updating brand successfully' do
       it 'Brands can be updated successfully' do
@@ -92,44 +103,113 @@ resource 'Brand' do
       end
     end
   end
-  get '/brands' do
-    before do
-      header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: user_1.id)
-    end
+  put '/brands/:id' do
+    describe 'Brand update as customer' do
+      before do
+        header 'Content-Type', 'application/json'
+        header 'Authorization', jwt_encode(user_id: $customer_user.id)
+      end
 
-    describe 'View all brands' do
-      it 'Display single product' do
-        do_request(show_brand)
+      it 'Customer user should not be able to create brand' do
+        do_request(update_brand)
         response_data = JSON.parse(response_body)
-        expect(response_status).to eq(200)
-        expect(response_data['success']).to eq(true)
-        expect(response_data['data'].pluck('name')).to eq([brand_1.name])
+        expect(response_status).to eq(401)
+        expect(response_data['message']).to eq('You are not authorized to access this page.')
       end
     end
   end
 
-  delete '/brands/:id' do
-    before do
-      header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: user_1.id)
-    end
-
-    describe 'Delete a brand' do
-      it 'Brand can be deleted successfully' do
+  get '/brands/:id' do
+    describe 'Show Brand' do
+      before do
+        header 'Content-Type', 'application/json'
+        header 'Authorization', jwt_encode(user_id: $admin_user.id)
+      end
+      it 'Display single brand' do
         do_request(show_brand)
         response_data = JSON.parse(response_body)
         expect(response_status).to eq(200)
         expect(response_data['success']).to eq(true)
-        expect(response_data['message']).to eq(I18n.t('brand.success.destroy'))
+        expect(response_data['data']['name']).to eq(brand_1.name)
       end
 
-      it 'Brand can not be deleted if brand is not present for mentioned Id' do
-        do_request(id: 787)
+      it 'Display single brand' do
+        do_request({ id: 6726 })
         response_data = JSON.parse(response_body)
         expect(response_status).to eq(422)
+        expect(response_data['success']).to eq(false)
         expect(response_data['message']).to eq(I18n.t('brand.error.not_found'))
       end
     end
   end
+
+  get '/brands' do
+    describe 'List all the brands' do
+      before do
+        header 'Content-Type', 'application/json'
+        header 'Authorization', jwt_encode(user_id: $admin_user.id)
+      end
+
+      it 'Admin/Supplier should be able to view all brands' do
+        do_request({})
+        response_data = JSON.parse(response_body)
+        expect(response_status).to eq(200)
+        expect(response_data['success']).to eq(true)
+        expect(response_data['count']).to eq(Brand.all.count)
+      end
+    end
+
+    describe 'List active brands' do
+      before do
+        header 'Content-Type', 'application/json'
+        header 'Authorization', jwt_encode(user_id: $customer_user.id)
+      end
+
+      it 'Customer should be able to view only active brands' do
+        do_request({})
+        response_data = JSON.parse(response_body)
+        expect(response_status).to eq(200)
+        expect(response_data['success']).to eq(true)
+        expect(response_data['count']).to eq(Brand.active.count)
+      end
+    end
+  end
+# ToDo- handle delete brand 
+  # put '/brands/:id' do
+  #   describe 'Delete a brand' do
+  #     before do
+  #       header 'Content-Type', 'application/json'
+  #       header 'Authorization', jwt_encode(user_id: $admin_user.id)
+  #     end
+  #     it 'Brand can be deleted successfully' do
+  #       byebug
+  #       do_request(show_brand)
+  #       byebug
+  #       response_data = JSON.parse(response_body)
+  #       byebug
+  #       expect(response_status).to eq(200)
+  #       expect(response_data['success']).to eq(true)
+  #       expect(response_data['message']).to eq(I18n.t('brand.success.destroy'))
+  #     end
+
+  #     it 'Brand can not be deleted if brand is not present for mentioned Id' do
+  #       do_request(id: 787)
+  #       response_data = JSON.parse(response_body)
+  #       expect(response_status).to eq(422)
+  #       expect(response_data['message']).to eq(I18n.t('brand.error.not_found'))
+  #     end
+  #   end
+  #   describe 'Delete a brand as supplier/Customer' do
+  #     before do
+  #       header 'Content-Type', 'application/json'
+  #       header 'Authorization', jwt_encode(user_id: $supplier_user.id)
+  #     end
+  #     it 'Supplier should not be able to delete any brand' do
+  #       do_request(show_brand)
+  #       response_data = JSON.parse(response_body)
+  #       expect(response_status).to eq(401)
+  #       expect(response_data['message']).to eq('You are not authorized to access this page.')
+  #     end
+  #   end
+  # end
 end

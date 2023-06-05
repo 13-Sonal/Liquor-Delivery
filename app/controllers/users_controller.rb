@@ -3,34 +3,52 @@ class UsersController < ApplicationController
 
   def create
     result = Users::Create.new(create_params).call
-    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
-  end  
+    if result[:success]
+      (render json: result)
+    else
+      (render json: result,
+              status: :unprocessable_entity)
+    end
+  end
 
   def create_params
     params.require(:user).permit(:first_name,
-      :last_name, :contact_number, :email_id, :role_id, :password)
+                                 :last_name, :contact_number, :email_id, :role_id, :password)
   end
-  def index
-    result = Users::Index.new(params, current_user).call
-    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
 
+  def index
+    result = Users::Index.new(params).call
+    if result[:success]
+      (render json: result)
+    else
+      (render json: result,
+              status: :unprocessable_entity)
+    end
   end
+
   def show
     result = Users::Show.new(params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
-
   end
-  
-  
 
   def destroy
     result = Users::Destroy.new(params).call
-    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+    if result[:success]
+      (render json: result)
+    else
+      (render json: result,
+              status: :unprocessable_entity)
+    end
   end
 
   def update
     result = Users::Update.new(updated_params).call
-    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+    if result[:success]
+      (render json: result)
+    else
+      (render json: result,
+              status: :unprocessable_entity)
+    end
   end
 
   def updated_params

@@ -7,10 +7,10 @@ module Roles
     end
 
     def call
-      find_id && display
+      find_role_id && display
     end
 
-    def find_id
+    def find_role_id
       @role = Role.find_by(id: id)
       return true if role
 
@@ -26,7 +26,7 @@ module Roles
       @response = {
         success: true,
         message: I18n.t('role.success.show'),
-        data: role.as_json(except: [:id, :created_at, :updated_at])
+        data: role.as_json(except: %i[id created_at updated_at])
       }
     end
   end

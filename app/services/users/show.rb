@@ -7,10 +7,10 @@ module Users
     end
 
     def call
-      find_id && display
+      find_user_id && display
     end
 
-    def find_id
+    def find_user_id
       @user = User.find_by(id: id)
       return true if user
 
@@ -26,7 +26,7 @@ module Users
       @response = {
         success: true,
         message: I18n.t('user.success.show'),
-        data: user.as_json(except: [:id, :created_at, :updated_at])
+        data: user.as_json(except: %i[id created_at updated_at])
       }
     end
   end
