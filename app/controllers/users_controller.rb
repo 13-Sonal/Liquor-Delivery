@@ -11,11 +11,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def create_params
-    params.require(:user).permit(:first_name,
-                                 :last_name, :contact_number, :email_id, :role_id, :password)
-  end
-
   def index
     result = Users::Index.new(params).call
     if result[:success]
@@ -49,6 +44,12 @@ class UsersController < ApplicationController
       (render json: result,
               status: :unprocessable_entity)
     end
+  end
+
+  private
+  def create_params
+    params.require(:user).permit(:first_name,
+                                 :last_name, :contact_number, :email_id, :role_id, :password)
   end
 
   def updated_params

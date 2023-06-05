@@ -25,16 +25,6 @@ class BrandsController < ApplicationController
     end
   end
 
-  # def deactivate
-  #   result = Brands::Deactivate.new(update_params, logged_in_user).call
-  #   if result[:success]
-  #     (render json: result)
-  #   else
-  #     (render json: result,
-  #             status: :unprocessable_entity)
-  #   end
-  # end
-
   private
 
   def create_params
@@ -44,8 +34,4 @@ class BrandsController < ApplicationController
   def update_params
     params.require(:brand).permit(:name, :is_active).merge(id: params[:id])
   end
-
-  # def delete_brand
-  #   params.merge(id: params[:id])
-  # end
 end

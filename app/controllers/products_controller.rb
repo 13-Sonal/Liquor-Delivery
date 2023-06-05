@@ -15,16 +15,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  def update_params
-    params.require(:product).permit(:quantity, :name,
-                                    :price, :stock).merge(product_id: params[:id])
-  end
-
-  def create_params
-    params.require(:product).permit(:name, :price,
-                                    :stock).merge(brand_id: params[:id])
-  end
-
   def destroy
     result = Products::Destroy.new(delete_params).call
     if result[:success]
@@ -33,10 +23,6 @@ class ProductsController < ApplicationController
       (render json: result,
               status: :unprocessable_entity)
     end
-  end
-
-  def delete_params
-    params.merge(id: params[:id])
   end
 
   def index
@@ -57,6 +43,22 @@ class ProductsController < ApplicationController
       (render json: result,
               status: :unprocessable_entity)
     end
+  end
+
+  private
+
+  def delete_params
+    params.merge(id: params[:id])
+  end
+
+  def create_params
+    params.require(:product).permit(:name, :price,
+                                    :stock).merge(brand_id: params[:id])
+  end
+
+  def update_params
+    params.require(:product).permit(:quantity, :name,
+                                    :price, :stock).merge(product_id: params[:id])
   end
 
   def show_params
