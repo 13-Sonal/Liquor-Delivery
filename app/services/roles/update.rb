@@ -8,10 +8,10 @@ module Roles
     end
 
     def call
-      find_role_id && update && set_response
+      fetch_role && update && set_response
     end
 
-    def find_role_id
+    def fetch_role
       @role = Role.find_by(id: id)
       return true if role
 
@@ -29,9 +29,7 @@ module Roles
     end
 
     def set_response
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('role.success.update'),
         data: role.as_json(except: %i[id created_at updated_at])

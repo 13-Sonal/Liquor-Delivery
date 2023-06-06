@@ -1,5 +1,5 @@
 module Brands
-  class Show < Base
+  class Show
     attr_accessor :params, :id, :brand, :response, :current_user
 
     def initialize(params, current_user)
@@ -22,9 +22,7 @@ module Brands
     end
 
     def display
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('brand.success.show'),
         data: brand.as_json(except: %i[id created_at updated_at])

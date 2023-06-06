@@ -1,24 +1,15 @@
 class UsersController < ApplicationController
-  protect_from_forgery
 
   def create
     result = Users::Create.new(create_params).call
-    if result[:success]
-      (render json: result)
-    else
-      (render json: result,
-              status: :unprocessable_entity)
-    end
+    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+
   end
 
   def index
     result = Users::Index.new(params).call
-    if result[:success]
-      (render json: result)
-    else
-      (render json: result,
-              status: :unprocessable_entity)
-    end
+    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+
   end
 
   def show
@@ -28,22 +19,14 @@ class UsersController < ApplicationController
 
   def destroy
     result = Users::Destroy.new(params).call
-    if result[:success]
-      (render json: result)
-    else
-      (render json: result,
-              status: :unprocessable_entity)
-    end
+    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+
   end
 
   def update
     result = Users::Update.new(updated_params).call
-    if result[:success]
-      (render json: result)
-    else
-      (render json: result,
-              status: :unprocessable_entity)
-    end
+    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
+
   end
 
   private

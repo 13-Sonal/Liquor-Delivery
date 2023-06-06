@@ -1,5 +1,4 @@
 class BrandsController < ApplicationController
-  protect_from_forgery
   def create
     result = Brands::Create.new(create_params, logged_in_user).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
@@ -17,12 +16,7 @@ class BrandsController < ApplicationController
 
   def update
     result = Brands::Update.new(update_params, logged_in_user).call
-    if result[:success]
-      (render json: result)
-    else
-      (render json:
-         result, status: :unprocessable_entity)
-    end
+    result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end
 
   private

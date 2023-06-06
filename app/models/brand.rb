@@ -1,6 +1,5 @@
 class Brand < ApplicationRecord
-  scope :active, -> { where(:is_active => true) }
+  validates :name, presence: true, uniqueness: true
   has_many :products
-  validates_uniqueness_of :name
- 
+  scope :active, -> { where(:is_active => true) }
 end

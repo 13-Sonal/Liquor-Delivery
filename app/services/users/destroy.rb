@@ -1,5 +1,5 @@
 module Users
-  class Destroy < Base
+  class Destroy 
     attr_accessor :id, :user, :response
 
     def initialize(params)
@@ -16,12 +16,12 @@ module Users
 
       @response = {
         success: false,
-        message:	I18n.t('user.error.not_found')
+        message: I18n.t('user.error.not_found')
       }
     end
 
     def destroy
-      return response if response
+      return response if response 
 
       user.destroy
       @response = {

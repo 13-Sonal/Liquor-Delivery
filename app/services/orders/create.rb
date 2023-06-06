@@ -1,5 +1,5 @@
 module Orders
-  class Create < Base
+  class Create
     attr_accessor :product_orders, :order, :total_quantity,
                   :bill_value, :current_user, :response
 
@@ -11,7 +11,7 @@ module Orders
     end
 
     def call
-      create_order && link_products && qty_bill_update && set_response
+      create_order && link_products && update_bill_quantity && set_response
     end
 
     def create_order
@@ -37,26 +37,21 @@ module Orders
                 product_order_params[:items].to_i)
             )
             product_order.save
-
           else
-
             @response = {
               success: false,
               message: I18n.t('product_order.error.place')
             }
-
-            # break
           end
         end
       end
     end
 
-    def qty_bill_update
+    def update_bill_quantity
       return response if response
 
       return true if order.update(total_quantity: total_quantity,
                                   bill_value: bill_value)
-
       @response = {
         success: false,
         message: order.errors.full_messages

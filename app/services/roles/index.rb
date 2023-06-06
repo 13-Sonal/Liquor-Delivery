@@ -1,18 +1,18 @@
 module Roles
-  class Index < Base
-    attr_accessor :response, :role
+  class Index
+    attr_accessor :response, :roles
 
     def initialize(params)
       @params = params
     end
 
     def call
-      fetch_role && set_response
+      fetch_roles && set_response
     end
 
-    def fetch_role
-      @role = Role.all
-      return true if role.present?
+    def fetch_roles
+      @roles = Role.all
+      return true if roles.present?
 
       @response = {
         success: false,
@@ -21,12 +21,10 @@ module Roles
     end
 
     def set_response
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('role.success.index'),
-        data: role.as_json(except: %i[id created_at updated_at])
+        data: roles.as_json(except: %i[id created_at updated_at])
       }
     end
   end

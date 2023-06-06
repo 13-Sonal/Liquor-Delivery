@@ -1,6 +1,6 @@
 module Users
-  class Index < Base
-    attr_accessor :response, :user
+  class Index
+    attr_accessor :response, :users
 
     def initialize(params)
       @params = params
@@ -11,8 +11,8 @@ module Users
     end
 
     def fetch_user
-      @user = User.all
-      return true if user.present?
+      @users = User.all
+      return true if users.present?
 
       @response = {
         success: false,
@@ -21,12 +21,11 @@ module Users
     end
 
     def set_response
-      return response if response
-
-      @response = {
+     
+      @response ||= {
         success: true,
         message: I18n.t('user.success.index'),
-        data: user.as_json(except: %i[id created_at updated_at password])
+        data: users.as_json(except: %i[id created_at updated_at password])
       }
     end
   end

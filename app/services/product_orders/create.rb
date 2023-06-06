@@ -1,5 +1,5 @@
 module ProductOrders
-  class Create < Base
+  class Create
     attr_accessor :product, :product_order_params, :response, :product_id,
                   :params, :product_order, :order_id
 

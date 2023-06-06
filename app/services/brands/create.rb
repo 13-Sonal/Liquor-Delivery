@@ -1,5 +1,5 @@
 module Brands
-  class Create < Base
+  class Create
     attr_accessor :params, :brand_name, :response, :brand, :current_user
 
     def initialize(params, current_user)
@@ -8,7 +8,7 @@ module Brands
     end
 
     def call
-      create_brand && display
+      create_brand && display_brand
     end
 
     def create_brand
@@ -21,10 +21,8 @@ module Brands
       }
     end
 
-    def display
-      return response if response
-
-      @response = {
+    def display_brand
+      @response ||= {
         success: true,
         message: I18n.t('brand.success.create'),
         data: brand.as_json(except: %i[created_at updated_at id is_active])

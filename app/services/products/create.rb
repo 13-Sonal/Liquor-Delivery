@@ -1,7 +1,7 @@
 module Products
   class Create
     attr_accessor :product_params, :params, :response,
-                  :product, :brand_id, :brand, :brand_pro, :qty, :price
+                  :product, :brand_id, :brand
 
     def initialize(params)
       @product_params = params
@@ -34,10 +34,8 @@ module Products
       }
     end
 
-    def display
-      return response if response
-
-      @reponse = {
+    def display   
+      @response ||={
         success: true,
         message: I18n.t('product.success.create'),
         brand: product.brand.name,

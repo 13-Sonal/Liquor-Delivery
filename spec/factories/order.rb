@@ -1,5 +1,5 @@
 require 'faker'
 FactoryBot.define do
-    factory :order do
-    end
+  factory :order do
+  end
 end

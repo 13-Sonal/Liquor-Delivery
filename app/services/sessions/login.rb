@@ -45,9 +45,8 @@ module Sessions
     end
 
     def set_response
-      return response if response
-
-      @response = {
+      
+      @response ||= {
         success: true,
         data: user.as_json,
         token: token

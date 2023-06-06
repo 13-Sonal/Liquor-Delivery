@@ -1,5 +1,5 @@
 module Users
-  class Create < Base
+  class Create
     attr_accessor :params, :response, :user
 
     def initialize(params)
@@ -21,9 +21,8 @@ module Users
     end
 
     def display
-      return response if response
-
-      @response = {
+      
+      @response ||= {
         success: true,
         message: I18n.t('user.success.create'),
         data: user.as_json(except: %i[id created_at updated_at password])

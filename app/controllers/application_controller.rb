@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include JsonWebToken
   before_action :authenticate_request
   authorize_resource
+  protect_from_forgery
 
   attr_accessor :current_user
 
@@ -11,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_parameter_missing(exception)
-    render json: { esrror: exception.message }, status: :bad_request
+    render json: { error: "missing params" }, status: :bad_request
   end
 
   def logged_in_user

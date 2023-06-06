@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  protect_from_forgery
   skip_before_action :authenticate_request
   skip_authorize_resource
 

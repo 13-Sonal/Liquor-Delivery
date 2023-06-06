@@ -1,6 +1,6 @@
 module Brands
-  class Index < Base
-    attr_accessor :response, :brand, :current_user
+  class Index
+    attr_accessor :response, :brands, :current_user
 
     def initialize(params, current_user)
       @current_user = current_user
@@ -13,12 +13,11 @@ module Brands
 
     def fetch_brands
       if current_user.is_supplier? || current_user.is_admin?
-        @brand = Brand.all
-        return true if brand.present?
-
+        @brands = Brand.all
+        return true if brands
+        
       elsif current_user.is_customer?
-
-        @brand = Brand.active
+        @brands = Brand.active
         true
       else
         @response = {
@@ -29,13 +28,12 @@ module Brands
     end
 
     def set_response
-      return response if response
 
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('brand.success.index'),
-        count: brand.count,
-        data: brand.as_json(except: %i[id created_at updated_at])
+        count: brands.count,
+        data: brands.as_json(except: %i[id created_at updated_at])
       }
     end
   end

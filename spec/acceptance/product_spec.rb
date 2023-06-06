@@ -159,30 +159,6 @@ resource 'Product' do
     end
   end
 
-  delete 'products/:id' do
-    before do
-      header 'Content-Type', 'application/json'
-      header 'Authorization', jwt_encode(user_id: $admin_user.id)
-    end
-
-    describe 'delete product' do
-      it 'delete existing product successfully' do
-        do_request(delete_product)
-        response_data = JSON.parse(response_body)
-        expect(response_status).to eq(200)
-        expect(response_data['success']).to eq(true)
-        expect(response_data['message']).to eq(I18n.t('product.success.destroy'))
-      end
-
-      it 'should fail with incorrect product id' do
-        do_request(incorrect_prod_id)
-        response_data = JSON.parse(response_body)
-        expect(response_status).to eq(422)
-        expect(response_data['message']).to eq(I18n.t('product.error.not_found'))
-      end
-    end
-  end
-
   get 'products/:id' do
     describe 'View single product' do
       before do

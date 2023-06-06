@@ -1,6 +1,6 @@
 module Products
-  class Index < Base
-    attr_accessor :params, :response, :product, :current_user
+  class Index 
+    attr_accessor :params, :response, :products, :current_user
 
     def initialize(params, current_user)
       @params = params
@@ -13,12 +13,11 @@ module Products
 
     def find_products
       if current_user.is_supplier? || current_user.is_admin?
-        @product = Product.all
-        return true if product
-
+        @products = Product.all
+        return true if products
       elsif current_user.is_customer?
-        @product = Product.active_brands
-        return true if product
+        @products = Product.active_brands
+        return true if products
       else
         @response = {
           success: false,
@@ -28,13 +27,11 @@ module Products
     end
 
     def display_products
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
-        count: product.count,
+        count: products.count,
         message: I18n.t('product.success.index'),
-        data: product.as_json(except: %i[id created_at updated_at])
+        data: products.as_json(except: %i[id created_at updated_at])
       }
     end
   end

@@ -1,5 +1,5 @@
 module Users
-  class Update < Base
+  class Update
     attr_accessor :params, :id, :user, :response
 
     def initialize(params)
@@ -32,9 +32,8 @@ module Users
     end
 
     def set_response
-      return response if response
-
-      @response = {
+      
+      @response ||= {
         success: true,
         message: I18n.t('user.success.update'),
         data: user.as_json(except: %i[id created_at updated_at id password])

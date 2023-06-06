@@ -1,5 +1,5 @@
 module Products
-  class Update < Base
+  class Update
     attr_accessor :update_brand_products, :brand_id, :product_id,
                   :response, :brand_product, :product, :brand
 
@@ -9,7 +9,7 @@ module Products
     end
 
     def call
-      find_product && update_key && set_response
+      find_product && update_attributes && set_response
     end
 
     def find_product
@@ -24,7 +24,7 @@ module Products
       }
     end
 
-    def update_key
+    def update_attributes
       return response if response
       return true if product.update(update_brand_products)
 
@@ -35,9 +35,7 @@ module Products
     end
 
     def set_response
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('product.success.update'),
         brand: product.brand.name,

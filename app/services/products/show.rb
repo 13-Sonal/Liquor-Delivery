@@ -1,5 +1,5 @@
 module Products
-  class Show < Base
+  class Show
     attr_accessor :params, :response, :product, :current_user
 
     def initialize(params, current_user)
@@ -8,10 +8,10 @@ module Products
     end
 
     def call
-      find_prod && check_access && show
+      find_product && check_access && show
     end
 
-    def find_prod
+    def find_product
       @product = Product.find_by(id: params[:id])
       return true if product
 
@@ -38,9 +38,7 @@ module Products
     end
 
     def show
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('product.success.show'),
         data: product.as_json(except: %i[id created_at updated_at])

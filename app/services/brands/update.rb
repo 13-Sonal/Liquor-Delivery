@@ -33,9 +33,8 @@ module Brands
     end
 
     def set_response
-      return response if response
 
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('brand.success.update'),
         data: brand.as_json(except: %i[id created_at updated_at])

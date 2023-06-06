@@ -1,5 +1,5 @@
 module Roles
-  class Show < Base
+  class Show
     attr_accessor :params, :id, :role, :response
 
     def initialize(params)
@@ -7,10 +7,10 @@ module Roles
     end
 
     def call
-      find_role_id && display
+      fetch_role && display
     end
 
-    def find_role_id
+    def fetch_role
       @role = Role.find_by(id: id)
       return true if role
 
@@ -21,9 +21,7 @@ module Roles
     end
 
     def display
-      return response if response
-
-      @response = {
+      @response ||= {
         success: true,
         message: I18n.t('role.success.show'),
         data: role.as_json(except: %i[id created_at updated_at])

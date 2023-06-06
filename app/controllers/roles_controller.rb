@@ -1,5 +1,4 @@
 class RolesController < ApplicationController
-  protect_from_forgery
 
   def create
     result = Roles::Create.new(create_params).call
@@ -14,11 +13,6 @@ class RolesController < ApplicationController
   def show
     result = Roles::Show.new(params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
-  end
-
-  def destroy
-    result = Roles::Destroy.new(params).call
-    render json: result
   end
 
   def update
