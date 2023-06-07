@@ -29,7 +29,7 @@ module Orders
       ActiveRecord::Base.transaction do
         product_orders.each do |product_order_params|
           @result = ProductOrders::Create.new(product_order_params, order.id).call
-          byebug
+  
           if @result[:success] == true
             @total_quantity += @result[:items].to_i
             @bill_value += @result[:accumulated_price].to_i
@@ -44,7 +44,6 @@ module Orders
     end
 
     def update_bill_quantity
-      byebug
       if response
         order.destroy
         return response
