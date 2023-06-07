@@ -1,7 +1,7 @@
 module Orders
   class Create
     attr_accessor :product_orders, :order, :total_quantity,
-                  :bill_value, :current_user, :response
+                 :bill_value, :current_user, :response
 
     def initialize(params, current_user)
       @product_orders = params[:order][:products]
@@ -28,32 +28,33 @@ module Orders
     def link_products
       ActiveRecord::Base.transaction do
         product_orders.each do |product_order_params|
-          if find_product(product_order_params[:product_id]).present?
-            product_order = ProductOrder.new(
-              product_id: product_order_params[:product_id],
-              order_id: order.id,
-              items: product_order_params[:items],
-              accumulated_price: (@product.price.to_i *
-                product_order_params[:items].to_i)
-            )
-            product_order.save
+          @result = ProductOrders::Create.new(product_order_params, order.id).call
+          byebug
+          if @result[:success] == true
+            @total_quantity += @result[:items].to_i
+            @bill_value += @result[:accumulated_price].to_i
           else
-            @response = {
-              success: false,
-              message: I18n.t('product_order.error.place')
-            }
-          end
+            raise RuntimeError
+          end 
         end
       end
+
+      rescue RuntimeError => e
+      @response= @result
     end
 
     def update_bill_quantity
-      return response if response
+      byebug
+      if response
+        order.destroy
+        return response
+      end
 
       return true if order.update(total_quantity: total_quantity,
-                                  bill_value: bill_value)
+        bill_value: bill_value)
+
       @response = {
-        success: false,
+        success: false, 
         message: order.errors.full_messages
       }
     end
@@ -69,11 +70,7 @@ module Orders
 
     def find_product(product_id)
       @product = Product.find_by(id: product_id)
-      if @product
-        true
-      else
-        false
-      end
+      @product ? true : false
     end
   end
 end

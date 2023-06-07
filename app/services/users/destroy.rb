@@ -22,7 +22,6 @@ module Users
 
     def destroy
       return response if response 
-
       user.destroy
       @response = {
         success: true,
