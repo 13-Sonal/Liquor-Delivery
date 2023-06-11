@@ -12,6 +12,8 @@ module Products
       find_brand && create_product && display
     end
 
+    private
+
     def find_brand
       @brand = Brand.find_by(id: brand_id)
       return true if brand

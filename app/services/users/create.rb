@@ -9,6 +9,8 @@ module Users
     def call
       save && display
     end
+    
+    private
 
     def save
       @user = User.new(params)

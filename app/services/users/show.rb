@@ -7,10 +7,12 @@ module Users
     end
 
     def call
-      find_user_id && display
+      find_user && display
     end
-
-    def find_user_id
+   
+    private
+    
+    def find_user
       @user = User.find_by(id: id)
       return true if user
 
@@ -21,7 +23,6 @@ module Users
     end
 
     def display
-      
       @response ||= {
         success: true,
         message: I18n.t('user.success.show'),

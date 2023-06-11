@@ -11,6 +11,8 @@ module Users
       find_user && update && set_response
     end
 
+    private
+    
     def find_user
       @user = User.find_by(id: id)
       return true if user
@@ -32,7 +34,6 @@ module Users
     end
 
     def set_response
-      
       @response ||= {
         success: true,
         message: I18n.t('user.success.update'),

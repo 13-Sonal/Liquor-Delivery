@@ -11,6 +11,8 @@ module Products
       find_products && display_products
     end
 
+    private
+
     def find_products
       if current_user.is_supplier? || current_user.is_admin?
         @products = Product.all

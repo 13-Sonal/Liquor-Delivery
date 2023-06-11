@@ -11,20 +11,21 @@ module Brands
       fetch_brands && set_response
     end
 
+    private
+
     def fetch_brands
       if current_user.is_supplier? || current_user.is_admin?
         @brands = Brand.all
-        return true if brands
-        
       elsif current_user.is_customer?
         @brands = Brand.active
-        true
       else
         @response = {
           success: false,
           message: I18n.t('brand.error.not_found')
         }
+        return false
       end
+      true
     end
 
     def set_response

@@ -1,6 +1,6 @@
 class BrandsController < ApplicationController
   def create
-    result = Brands::Create.new(create_params, logged_in_user).call
+    result = Brands::Create.new(create_params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end
 
@@ -10,12 +10,12 @@ class BrandsController < ApplicationController
   end
 
   def show
-    result = Brands::Show.new(params, logged_in_user).call
+    result = Brands::Show.new(params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end
 
   def update
-    result = Brands::Update.new(update_params, logged_in_user).call
+    result = Brands::Update.new(update_params).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end
 

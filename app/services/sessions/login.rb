@@ -13,6 +13,8 @@ module Sessions
         generate_token && set_response
     end
 
+    private
+
     def find_user
       @user = User.find_by(email_id: email)
       return true if user

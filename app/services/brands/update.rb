@@ -1,19 +1,20 @@
 module Brands
   class Update
-    attr_accessor :update_params, :response, :brand, :id, :current_user
+    attr_accessor :update_params, :response, :brand, :id
 
-    def initialize(params, current_user)
+    def initialize(params)
       @update_params = params.except(:id)
-      @current_user = current_user
       @id = params[:id]
     end
 
     def call
-      check_brand_exists && update && set_response
+      find_brand && update && set_response
     end
 
-    def check_brand_exists
-      @brand = Brand.find_by(id: id)
+    private
+    
+    def find_brand  
+      @brand = Brand.find_by(id: id)  
       return true if brand
 
       @response = {
@@ -22,7 +23,7 @@ module Brands
       }
     end
 
-    def update
+    def update  
       return response if response
       return true if brand.update(update_params)
 

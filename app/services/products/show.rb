@@ -27,13 +27,14 @@ module Products
       if current_user.is_admin? || current_user.is_supplier?
         true
 
-      elsif current_user.is_customer?
-        return true if product.brand.is_active
-
+      elsif current_user.is_customer? && product.brand.is_active
+        true 
+      else
         @response = {
           success: false,
           message: I18n.t('product.error.not_found')
         }
+        false
       end
     end
 

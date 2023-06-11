@@ -4,7 +4,7 @@ module Orders
                  :bill_value, :current_user, :response
 
     def initialize(params, current_user)
-      @product_orders = params[:order][:products]
+      @product_orders = params.dig(:order,:products)
       @current_user = current_user
       @total_quantity = 0
       @bill_value = 0

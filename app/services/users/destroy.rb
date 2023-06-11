@@ -20,6 +20,8 @@ module Users
       }
     end
 
+    private
+
     def destroy
       return response if response 
       user.destroy

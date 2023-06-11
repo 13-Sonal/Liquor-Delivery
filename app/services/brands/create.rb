@@ -1,15 +1,16 @@
 module Brands
   class Create
-    attr_accessor :params, :brand_name, :response, :brand, :current_user
+    attr_accessor :params, :brand_name, :response, :brand
 
-    def initialize(params, current_user)
-      @current_user = current_user
+    def initialize(params)
       @params = params
     end
 
     def call
       create_brand && display_brand
     end
+
+    private
 
     def create_brand
       @brand = Brand.new(params)

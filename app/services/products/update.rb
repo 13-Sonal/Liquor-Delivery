@@ -11,6 +11,8 @@ module Products
     def call
       find_product && update_attributes && set_response
     end
+    
+    private
 
     def find_product
       return response if response

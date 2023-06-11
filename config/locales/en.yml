@@ -31,6 +31,8 @@
 
 en:
   hello: "Hello world"
+  params_missing: "Parameters missing"
+  token_expired: "Token has been expired"
 
   role:
     success:

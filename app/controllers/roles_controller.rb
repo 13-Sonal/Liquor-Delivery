@@ -16,7 +16,7 @@ class RolesController < ApplicationController
   end
 
   def update
-    result = Roles::Update.new(update_params, logged_in_user).call
+    result = Roles::Update.new(update_params).call
     render json: result
   end
 

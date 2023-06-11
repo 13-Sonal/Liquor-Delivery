@@ -10,6 +10,8 @@ module Roles
       create_role && display
     end
 
+    private
+
     def create_role
       @role = Role.new(params)
       return true if role.save

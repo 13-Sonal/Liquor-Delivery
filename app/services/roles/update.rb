@@ -1,8 +1,8 @@
 module Roles
   class Update
-    attr_accessor :params, :response, :role, :id, :current_user
+    attr_accessor :params, :response, :role, :id
 
-    def initialize(params, _current_user)
+    def initialize(params)
       @params = params.except(params[:id])
       @id = params[:id]
     end
@@ -10,6 +10,8 @@ module Roles
     def call
       fetch_role && update && set_response
     end
+    
+    private
 
     def fetch_role
       @role = Role.find_by(id: id)

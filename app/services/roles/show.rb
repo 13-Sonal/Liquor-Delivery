@@ -10,6 +10,8 @@ module Roles
       fetch_role && display
     end
 
+    private
+    
     def fetch_role
       @role = Role.find_by(id: id)
       return true if role

@@ -10,6 +10,7 @@ module Users
       fetch_user && set_response
     end
 
+    private
     def fetch_user
       @users = User.all
       return true if users.present?
@@ -21,7 +22,6 @@ module Users
     end
 
     def set_response
-     
       @response ||= {
         success: true,
         message: I18n.t('user.success.index'),

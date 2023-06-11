@@ -13,7 +13,7 @@ module JsonWebToken
   rescue JWT::ExpiredSignature
     {
       error: true,
-      message: 'Token has been expired'
+      message: I18n.t('token_expired')
     }
   rescue JWT::VerificationError
     {

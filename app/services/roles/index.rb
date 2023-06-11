@@ -9,6 +9,8 @@ module Roles
     def call
       fetch_roles && set_response
     end
+    
+    private
 
     def fetch_roles
       @roles = Role.all

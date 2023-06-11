@@ -28,27 +28,25 @@ module ProductOrders
     def set_product_params
       return response if response
 
-      @product_order_params[:product_id] = product.id
-      @product_order_params[:order_id] = order_id
-      @product_order_params[:items] = params[:items]
-      @product_order_params[:accumulated_price] = (product.price.to_i *
-        params[:items].to_i)
+      @product_order_params = {
+        product_id: product.id,
+        order_id: order_id,
+        items: params[:items],
+        accumulated_price: (product.price.to_i * params[:items].to_i)
+        }        
     end
 
     def create_product_orders
       return response if response
 
       @product_order = ProductOrder.new(product_order_params)
-
+      
+      if product_order.save
       success_response = {
         success: true,
         accumulated_price: product_order.accumulated_price,
         items: product_order.items
       }
-
-      if product_order.save
-        success_response
-
       else
         false
       end

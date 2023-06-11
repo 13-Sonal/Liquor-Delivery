@@ -1,16 +1,15 @@
 module Brands
   class Show
-    attr_accessor :params, :id, :brand, :response, :current_user
+    attr_accessor :params, :id, :brand, :response,
 
-    def initialize(params, current_user)
+    def initialize(params)
       @id = params[:id]
-      @current_user = current_user
     end
 
     def call
       find_brand && display
     end
-
+    
     def find_brand
       @brand = Brand.find_by(id: id)
       return true if brand

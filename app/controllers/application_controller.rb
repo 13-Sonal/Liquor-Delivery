@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_parameter_missing(exception)
-    render json: { error: "missing params" }, status: :bad_request
+    render json: { error: I18n.t('params_missing') }, status: :bad_request
   end
 
   def logged_in_user

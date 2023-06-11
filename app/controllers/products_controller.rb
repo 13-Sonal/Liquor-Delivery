@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    result = Products::Show.new(show_params, logged_in_user).call
+    result = Products::Show.new(params, logged_in_user).call
     result[:success] ? (render json: result) : (render json: result, status: :unprocessable_entity)
   end
 
@@ -29,9 +29,5 @@ class ProductsController < ApplicationController
   def update_params
     params.require(:product).permit(:quantity, :name,
                                     :price, :stock).merge(product_id: params[:id])
-  end
-
-  def show_params
-    params.merge(id: params[:id])
   end
 end
