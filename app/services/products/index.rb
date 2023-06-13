@@ -16,18 +16,18 @@ module Products
     def find_products
       if current_user.is_supplier? || current_user.is_admin?
         @products = Product.all
-        return true if products
       elsif current_user.is_customer?
         @products = Product.active_brands
-        return true if products
       else
         @response = {
           success: false,
           message: I18n.t('product.error.not_found')
         }
+        return false
       end
+      products.present?
     end
-
+    
     def display_products
       @response ||= {
         success: true,

@@ -18,12 +18,12 @@ module JsonWebToken
   rescue JWT::VerificationError
     {
       error: true,
-      message: 'Unable to verify token'
+      message: I18n.t('unverified_token')
     }
   rescue JWT::DecodeError
     {
       error: true,
-      message: 'Unable to decode token'
+      message: I18n.t('decodeerror')
     }
   end
 end

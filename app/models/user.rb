@@ -7,8 +7,7 @@ class User < ApplicationRecord
   Role.pluck(:key).each do |rname|
    define_method "is_#{rname}?" do
      self.role.key == rname
-     
-      end
+    end
   end 
 end
 

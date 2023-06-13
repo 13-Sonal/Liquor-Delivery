@@ -16,9 +16,7 @@ module Orders
 
     def create_order
       @order = Order.new(user_id: current_user.id)
-
       return true if order.save
-
       @response = {
         success: false,
         message: order.errors.full_messages
@@ -65,11 +63,6 @@ module Orders
         success: true,
         message: I18n.t('order.success.create')
       }
-    end
-
-    def find_product(product_id)
-      @product = Product.find_by(id: product_id)
-      @product ? true : false
     end
   end
 end

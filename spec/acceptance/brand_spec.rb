@@ -129,6 +129,7 @@ resource 'Brand' do
         do_request(show_brand)
         response_data = JSON.parse(response_body)
         expect(response_status).to eq(200)
+
         expect(response_data['success']).to eq(true)
         expect(response_data['data']['name']).to eq(brand_1.name)
       end
@@ -182,11 +183,11 @@ resource 'Brand' do
   #       header 'Authorization', jwt_encode(user_id: $admin_user.id)
   #     end
   #     it 'Brand can be deleted successfully' do
-  #       byebug
+  #  
   #       do_request(show_brand)
-  #       byebug
+  #  
   #       response_data = JSON.parse(response_body)
-  #       byebug
+  #  
   #       expect(response_status).to eq(200)
   #       expect(response_data['success']).to eq(true)
   #       expect(response_data['message']).to eq(I18n.t('brand.success.destroy'))

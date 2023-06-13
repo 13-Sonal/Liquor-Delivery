@@ -4,11 +4,15 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    admin if user.is_admin?
-    supplier if user.is_supplier?
-    customer if user.is_customer?
+    case
+    when user.is_admin?
+      admin
+    when user.is_supplier?
+      supplier
+    when user.is_customer?
+      customer
+    end
   end
-
 
   def admin
     can :manage, :all
@@ -24,6 +28,6 @@ class Ability
     can [:index, :show], Brand
     can [:index, :show], Role
     can [:index, :show], Product
-    can [:order], Order
+    can [:create], Order
   end
 end

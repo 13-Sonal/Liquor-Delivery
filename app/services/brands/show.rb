@@ -1,6 +1,6 @@
 module Brands
   class Show
-    attr_accessor :params, :id, :brand, :response,
+    attr_accessor :params, :id, :brand, :response
 
     def initialize(params)
       @id = params[:id]

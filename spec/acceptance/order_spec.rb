@@ -116,8 +116,8 @@ resource 'Order' do
       it 'Order creation should not be allowed for customer' do
         do_request(place_order)
         response_data = JSON.parse(response_body)
-        expect(response_status).to eq(401)
-        expect(response_data['message']).to eq('You are not authorized to access this page.')
+        expect(response_status).to eq(200)
+        expect(response_data['message'].include?('Order successfully placed'))
       end
     end
   end

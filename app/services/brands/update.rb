@@ -34,7 +34,6 @@ module Brands
     end
 
     def set_response
-
       @response ||= {
         success: true,
         message: I18n.t('brand.success.update'),

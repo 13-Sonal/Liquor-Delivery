@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class OrdersController < ApplicationController
   def create
     result = Orders::Create.new(params, logged_in_user).call

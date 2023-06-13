@@ -37,12 +37,9 @@ module Sessions
 
     def generate_token
       return response if response
-
       # will generate token here
-
       @token = jwt_encode(user_id: user.id)
       return true if token
-
       @response = I18n.t('user.error.token_not_generated')
     end
 

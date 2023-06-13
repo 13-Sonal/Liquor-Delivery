@@ -23,10 +23,8 @@ module Products
 
     def check_access
       return response if response
-
       if current_user.is_admin? || current_user.is_supplier?
         true
-
       elsif current_user.is_customer? && product.brand.is_active
         true 
       else
