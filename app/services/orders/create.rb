@@ -16,7 +16,7 @@ module Orders
 
     def create_order
       @order = Order.new(user_id: current_user.id)
-      return true if order.save
+      return false
       @response = {
         success: false,
         message: order.errors.full_messages
@@ -24,6 +24,7 @@ module Orders
     end
 
     def link_products
+      return response if response
       ActiveRecord::Base.transaction do
         product_orders.each do |product_order_params|
           @result = ProductOrders::Create.new(product_order_params, order.id).call
