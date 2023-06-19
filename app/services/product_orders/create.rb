@@ -11,7 +11,7 @@ module ProductOrders
     end
 
     def call
-      find_product && set_product_params && create_product_orders
+      find_product && check_available_stock && set_product_params && create_product_orders
     end
 
     def find_product
@@ -24,6 +24,18 @@ module ProductOrders
         message: I18n.t('product.error.not_found')
       }
     end
+
+    def check_available_stock
+      return response if response
+      return true if (product.stock.to_i >= params[:items].to_i)
+      byebug
+      @response = {
+        success: false,
+        message: I18n.t('product_order.error.insufficient_stock' , name: product.name,
+                                                                   id: product.id)
+      }
+    end
+    
 
     def set_product_params
       return response if response

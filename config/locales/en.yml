@@ -50,7 +50,8 @@ en:
       
   product_order:
     error:
-      place: "Unable to place the order!!"    
+      place: "Unable to place the order!!"  
+      insufficient_stock: "insufficient stock for name: %{name} and id: %{id}"  
 
   user:
     success:
