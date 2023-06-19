@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
-  has_many :brands, through: :brand_products
-  has_many :brand_products,  dependent: :destroy
+  belongs_to :brand
+  scope :active_brands, -> { joins(:brand).where("brands.is_active = ?", true) }
+  validates :stock, :price, :name, presence: true
+  validates :stock, numericality: { greater_than: 0 }
 end

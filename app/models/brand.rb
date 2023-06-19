@@ -1,4 +1,5 @@
 class Brand < ApplicationRecord
-  has_many :products, through: :brand_products
-  has_many :brand_products
+  validates :name, presence: true, uniqueness: true
+  has_many :products
+  scope :active, -> { where(:is_active => true) }
 end
