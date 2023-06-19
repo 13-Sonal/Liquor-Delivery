@@ -16,7 +16,7 @@ module Orders
 
     def create_order
       @order = Order.new(user_id: current_user.id)
-      return false
+      return true if order.save
       @response = {
         success: false,
         message: order.errors.full_messages

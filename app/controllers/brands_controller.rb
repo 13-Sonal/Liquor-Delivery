@@ -21,11 +21,6 @@ class BrandsController < ApplicationController
 
   private
 
-  def show_pramas
-    params.require(:brand).permit(:name)
-  end
-  
-
   def create_params
     params.require(:brand).permit(:name)
   end
